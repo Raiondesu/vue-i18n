@@ -10,40 +10,21 @@ declare namespace VueI18n {
   interface LocaleMessageArray { [index: number]: LocaleMessage; }
   interface LocaleMessages { [key: string]: LocaleMessageObject; }
   type TranslateResult = string | LocaleMessages;
-  interface DateTimeFormatOptions {
-    year?: string;
-    month?: string;
-    day?: string;
-    hour?: string;
-    minute?: string;
-    second?: string;
-    weekday?: string;
-    hour12?: boolean;
-    era?: string;
-    timeZone?: string;
-    timeZoneName?: string;
-    localeMatcher?: string;
-    formatMatcher?: string;
-  }
-  interface DateTimeFormat { [key: string]: DateTimeFormatOptions; }
-  interface DateTimeFormats { [key: string]: DateTimeFormat; }
+
+  interface DateTimeFormat { [type: string]: Intl.DateTimeFormatOptions; }
+  interface DateTimeFormats { [lang: string]: DateTimeFormat; }
   type DateTimeFormatResult = string;
-  interface NumberFormatOptions {
-    style?: string;
-    currency?: string;
-    currencyDisplay?: string;
-    useGrouping?: boolean;
-    minimumIntegerDigits?: number;
-    minimumFractionDigits?: number;
-    maximumFractionDigits?: number;
-    minimumSignificantDigits?: number;
-    maximumSignificantDigits?: number;
-    localeMatcher?: string;
-    formatMatcher?: string;
-  }
-  interface NumberFormat { [key: string]: NumberFormatOptions; }
-  interface NumberFormats { [key: string]: NumberFormat; }
+  interface NumberFormat { [type: string]: Intl.NumberFormatOptions; }
+  interface NumberFormats { [lang: string]: NumberFormat; }
   type NumberFormatResult = string;
+  type PluralizationRulesMap = {
+    /**
+     * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+     * @param choicesLength {number} an overall amount of available choices
+     * @returns a final choice index
+    */
+    [lang: string]: (choice: number, choicesLength: number) => number;
+  };
 
   interface Formatter {
     interpolate(message: string, values?: Values): any[];
@@ -68,6 +49,7 @@ declare namespace VueI18n {
     fallbackRoot?: boolean;
     sync?: boolean;
     silentTranslationWarn?: boolean;
+    pluralizationRules?: PluralizationRulesMap;
   }
 }
 
@@ -80,11 +62,11 @@ export type LocaleMessageObject = VueI18n.LocaleMessageObject;
 export type LocaleMessageArray = VueI18n.LocaleMessageArray;
 export type LocaleMessages = VueI18n.LocaleMessages;
 export type TranslateResult = VueI18n.TranslateResult;
-export type DateTimeFormatOptions = VueI18n.DateTimeFormatOptions;
+export type DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 export type DateTimeFormat = VueI18n.DateTimeFormat;
 export type DateTimeFormats = VueI18n.DateTimeFormats;
 export type DateTimeFormatResult = VueI18n.DateTimeFormatResult;
-export type NumberFormatOptions = VueI18n.NumberFormatOptions;
+export type NumberFormatOptions = Intl.NumberFormatOptions;
 export type NumberFormat = VueI18n.NumberFormat;
 export type NumberFormats = VueI18n.NumberFormats;
 export type NumberFormatResult = VueI18n.NumberFormatResult;
@@ -103,6 +85,7 @@ export declare interface IVueI18n {
   missing: VueI18n.MissingHandler;
   formatter: VueI18n.Formatter;
   silentTranslationWarn: boolean;
+  pluralizationRules: VueI18n.PluralizationRulesMap;
 }
 
 declare class VueI18n {
@@ -142,7 +125,7 @@ declare class VueI18n {
 
   /**
    * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
-   * @param choiceLength {number} an overall amount of available choices
+   * @param choicesLength {number} an overall amount of available choices
    * @returns a final choice index
   */
   getChoiceIndex: (choice: number, choicesLength: number) => number;
