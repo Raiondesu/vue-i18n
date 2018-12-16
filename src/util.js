@@ -25,7 +25,7 @@ export function isPlainObject (obj: any): boolean {
 }
 
 export function isNull (val: mixed): boolean {
-  return val === null || val === undefined
+  return val == null
 }
 
 export function parseArgs (...args: Array<mixed>): Object {
@@ -75,9 +75,10 @@ export function merge (target: Object): Object {
   const output = Object(target)
   for (let i = 1; i < arguments.length; i++) {
     const source = arguments[i]
-    if (source !== undefined && source !== null) {
+    if (!isNull(source)) {
       let key
       for (key in source) {
+        /* istanbul ignore else */
         if (hasOwn(source, key)) {
           if (isObject(source[key])) {
             output[key] = merge(output[key], source[key])
@@ -96,25 +97,19 @@ export function looseEqual (a: any, b: any): boolean {
   const isObjectA: boolean = isObject(a)
   const isObjectB: boolean = isObject(b)
   if (isObjectA && isObjectB) {
-    try {
-      const isArrayA: boolean = Array.isArray(a)
-      const isArrayB: boolean = Array.isArray(b)
-      if (isArrayA && isArrayB) {
-        return a.length === b.length && a.every((e: any, i: number): boolean => {
-          return looseEqual(e, b[i])
-        })
-      } else if (!isArrayA && !isArrayB) {
-        const keysA: Array<string> = Object.keys(a)
-        const keysB: Array<string> = Object.keys(b)
-        return keysA.length === keysB.length && keysA.every((key: string): boolean => {
-          return looseEqual(a[key], b[key])
-        })
-      } else {
-        /* istanbul ignore next */
-        return false
-      }
-    } catch (e) {
-      /* istanbul ignore next */
+    const isArrayA: boolean = Array.isArray(a)
+    const isArrayB: boolean = Array.isArray(b)
+    if (isArrayA && isArrayB) {
+      return a.length === b.length && a.every((e: any, i: number): boolean => {
+        return looseEqual(e, b[i])
+      })
+    } else if (!isArrayA && !isArrayB) {
+      const keysA: Array<string> = Object.keys(a)
+      const keysB: Array<string> = Object.keys(b)
+      return keysA.length === keysB.length && keysA.every((key: string): boolean => {
+        return looseEqual(a[key], b[key])
+      })
+    } else {
       return false
     }
   } else if (!isObjectA && !isObjectB) {

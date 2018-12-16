@@ -1,4 +1,4 @@
-import { parseArgs, looseEqual, remove } from '../../src/util'
+import { parseArgs, looseEqual, remove, merge } from '../../src/util'
 
 describe('parseArgs', () => {
   it('warns on wrong arguments', () => {
@@ -16,6 +16,14 @@ describe('parseArgs', () => {
 describe('looseEqual', () => {
   it('can return false', () => {
     assert(looseEqual(2, 0) === false)
+  })
+
+  it('does not compare objects with arrays', () => {
+    assert(looseEqual({ 0: 0 }, [0]) === false)
+  })
+
+  it('does not compare primitives with objects', () => {
+    assert(looseEqual('a', Object('a')) === false)
   })
 })
 
@@ -42,5 +50,18 @@ describe('remove', () => {
     }
 
     assert(exceptions === 0)
+  })
+})
+
+describe('merge', () => {
+  it('ignores nulls', () => {
+    const obj = {
+      test: 'test'
+    }
+
+    const newObj = merge(obj, null)
+
+    assert(Object.keys(obj).length === Object.keys(newObj).length)
+    assert(obj.test === newObj.test)
   })
 })
