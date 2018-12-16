@@ -187,7 +187,7 @@ class VueI18n {
         return missingRet
       }
     } else {
-      if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+      if (!this._silentTranslationWarn) {
         warn(
           `Cannot translate the value of keypath '${key}'. ` +
           'Use the value of keypath as default.'
@@ -221,7 +221,7 @@ class VueI18n {
       if (isPlainObject(message)) {
         ret = message[key]
         if (typeof ret !== 'string') {
-          if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+          if (!this._silentTranslationWarn) {
             warn(`Value of key '${key}' is not a string!`)
           }
           return null
@@ -234,7 +234,7 @@ class VueI18n {
       if (typeof pathRet === 'string') {
         ret = pathRet
       } else {
-        if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+        if (!this._silentTranslationWarn) {
           warn(`Value of key '${key}' is not a string!`)
         }
         return null
@@ -278,9 +278,7 @@ class VueI18n {
       const linkPlaceholder: string = link.replace(linkPrefix, '').replace(bracketsMatcher, '')
 
       if (visitedLinkStack.includes(linkPlaceholder)) {
-        if (process.env.NODE_ENV !== 'production') {
-          warn(`Circular reference found. "${link}" is already visited in the chain of ${visitedLinkStack.reverse().join(' <- ')}`)
-        }
+        warn(`Circular reference found. "${link}" is already visited in the chain of ${visitedLinkStack.reverse().join(' <- ')}`)
         return ret
       }
       visitedLinkStack.push(linkPlaceholder)
@@ -294,7 +292,7 @@ class VueI18n {
       )
 
       if (this._isFallbackRoot(translated)) {
-        if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+        if (!this._silentTranslationWarn) {
           warn(`Fall back to translate the link placeholder '${linkPlaceholder}' with root locale.`)
         }
         /* istanbul ignore if */
@@ -344,7 +342,7 @@ class VueI18n {
 
     res = this._interpolate(fallback, messages[fallback], key, host, interpolateMode, args, [key])
     if (!isNull(res)) {
-      if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+      if (!this._silentTranslationWarn) {
         warn(`Fall back to translate the keypath '${key}' with '${fallback}' locale.`)
       }
       return res
@@ -364,7 +362,7 @@ class VueI18n {
       host, 'string', parsedArgs.params
     )
     if (this._isFallbackRoot(ret)) {
-      if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+      if (!this._silentTranslationWarn) {
         warn(`Fall back to translate the keypath '${key}' with root locale.`)
       }
       /* istanbul ignore if */
@@ -383,7 +381,7 @@ class VueI18n {
     const ret: any =
       this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values)
     if (this._isFallbackRoot(ret)) {
-      if (process.env.NODE_ENV !== 'production' && !this._silentTranslationWarn) {
+      if (!this._silentTranslationWarn) {
         warn(`Fall back to interpolate the keypath '${key}' with root locale.`)
       }
       if (!this._root) { throw Error('unexpected error') }
@@ -511,9 +509,7 @@ class VueI18n {
 
     // fallback locale
     if (isNull(formats) || isNull(formats[key])) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn(`Fall back to '${fallback}' datetime formats from '${locale} datetime formats.`)
-      }
+      warn(`Fall back to '${fallback}' datetime formats from '${locale} datetime formats.`)
       _locale = fallback
       formats = dateTimeFormats[_locale]
     }
@@ -533,7 +529,7 @@ class VueI18n {
 
   _d (value: number | Date, locale: Locale, key: ?string): DateTimeFormatResult {
     /* istanbul ignore if */
-    if (process.env.NODE_ENV !== 'production' && !VueI18n.availabilities.dateTimeFormat) {
+    if (!VueI18n.availabilities.dateTimeFormat) {
       warn('Cannot format a Date value due to not supported Intl.DateTimeFormat.')
       return ''
     }
@@ -545,9 +541,8 @@ class VueI18n {
     const ret: ?DateTimeFormatResult =
       this._localizeDateTime(value, locale, this.fallbackLocale, this._getDateTimeFormats(), key)
     if (this._isFallbackRoot(ret)) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn(`Fall back to datetime localization of root: key '${key}' .`)
-      }
+      warn(`Fall back to datetime localization of root: key '${key}' .`)
+
       /* istanbul ignore if */
       if (!this._root) { throw Error('unexpected error') }
       return this._root.$i18n.d(value, key, locale)
@@ -608,9 +603,8 @@ class VueI18n {
 
     // fallback locale
     if (isNull(formats) || isNull(formats[key])) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn(`Fall back to '${fallback}' number formats from '${locale} number formats.`)
-      }
+      warn(`Fall back to '${fallback}' number formats from '${locale} number formats.`)
+
       _locale = fallback
       formats = numberFormats[_locale]
     }
@@ -638,9 +632,7 @@ class VueI18n {
   _n (value: number, locale: Locale, key: ?string, options: ?NumberFormatOptions): NumberFormatResult {
     /* istanbul ignore if */
     if (!VueI18n.availabilities.numberFormat) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn('Cannot format a Number value due to not supported Intl.NumberFormat.')
-      }
+      warn('Cannot format a Number value due to not supported Intl.NumberFormat.')
       return ''
     }
 
@@ -652,9 +644,8 @@ class VueI18n {
     const ret: ?NumberFormatResult =
       this._localizeNumber(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options)
     if (this._isFallbackRoot(ret)) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn(`Fall back to number localization of root: key '${key}' .`)
-      }
+      warn(`Fall back to number localization of root: key '${key}' .`)
+
       /* istanbul ignore if */
       if (!this._root) { throw Error('unexpected error') }
       return this._root.$i18n.n(value, Object.assign({}, { key, locale }, options))

@@ -6,7 +6,7 @@
 
 export function warn (msg: string, err: ?Error): void {
   /* istanbul ignore else */
-  if (typeof console !== 'undefined') {
+  if (typeof console !== 'undefined' && process.env.NODE_ENV !== 'production') {
     console.warn('[vue-i18n] ' + msg)
     if (err) {
       console.warn(err.stack)

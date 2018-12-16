@@ -96,15 +96,11 @@ export function compile (tokens: Array<Token>, values: Object | Array<any>): Arr
         if (mode === 'named') {
           compiled.push((values: any)[token.value])
         } else {
-          if (process.env.NODE_ENV !== 'production') {
-            warn(`Type of token '${token.type}' and format of value '${mode}' don't match!`)
-          }
+          warn(`Type of token '${token.type}' and format of value '${mode}' don't match!`)
         }
         break
       case 'unknown':
-        if (process.env.NODE_ENV !== 'production') {
-          warn(`Detect 'unknown' type of token!`)
-        }
+        warn(`Detect 'unknown' type of token!`)
         break
     }
     index++

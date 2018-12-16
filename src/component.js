@@ -29,9 +29,7 @@ export default {
     })
 
     if (!i18n) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn('Cannot find VueI18n instance!')
-      }
+      warn('Cannot find VueI18n instance!')
       return children
     }
 
@@ -52,7 +50,7 @@ export default {
       }
     })
 
-    if (process.env.NODE_ENV !== 'production' && hasPlaces && children.length > 0 && !everyPlace) {
+    if (hasPlaces && children.length > 0 && !everyPlace) {
       warn('If places prop is set, all child elements must have place prop set.')
     }
 

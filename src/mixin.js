@@ -31,7 +31,7 @@ export default {
         this._i18n.subscribeDataChanging(this)
         this._subscribing = true
       } else if (isPlainObject(options.i18n)) {
-        // component local i18n
+        /* istanbul ignore else */// component local i18n
         if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
           options.i18n.root = this.$root
           options.i18n.formatter = this.$root.$i18n.formatter
@@ -48,9 +48,7 @@ export default {
             })
             options.i18n.messages = localeMessages
           } catch (e) {
-            if (process.env.NODE_ENV !== 'production') {
-              warn(`Cannot parse locale messages via custom blocks.`, e)
-            }
+            warn(`Cannot parse locale messages via custom blocks.`, e)
           }
         }
 
@@ -63,9 +61,7 @@ export default {
           this._localeWatcher = this.$i18n.watchLocale()
         }
       } else {
-        if (process.env.NODE_ENV !== 'production') {
-          warn(`Cannot be interpreted 'i18n' option.`)
-        }
+        warn(`Cannot be interpreted 'i18n' option.`)
       }
     } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
       // root i18n
@@ -83,6 +79,7 @@ export default {
   beforeDestroy (): void {
     if (!this._i18n) { return }
 
+    /* istanbul ignore else */// don't need to do anything if not subbed
     if (this._subscribing) {
       this._i18n.unsubscribeDataChanging(this)
       delete this._subscribing
