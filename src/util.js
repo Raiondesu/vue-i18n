@@ -5,9 +5,9 @@
  */
 
 export function warn (msg: string, err: ?Error): void {
+  /* istanbul ignore else */
   if (typeof console !== 'undefined') {
     console.warn('[vue-i18n] ' + msg)
-    /* istanbul ignore if */
     if (err) {
       console.warn(err.stack)
     }
