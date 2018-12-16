@@ -1,7 +1,8 @@
 /* @flow */
 
-export default function extend (Vue: any): void {
-  if (!Vue.prototype.hasOwnProperty('$i18n')) {
+export default function extend (Vue: any, VueI18n: any): void {
+  /* istanbul ignore next */// because the prop is valid then
+  if (!Vue.prototype.hasOwnProperty('$i18n') || !(Vue.prototype.$i18n instanceof VueI18n)) {
     // $FlowFixMe
     Object.defineProperty(Vue.prototype, '$i18n', {
       get () { return this._i18n }

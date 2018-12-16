@@ -16,6 +16,7 @@ export function install (_Vue) {
 
   Vue = _Vue
 
+  /* istanbul ignore next */
   const version = (Vue.version && Number(Vue.version.split('.')[0])) || -1
   /* istanbul ignore next */
   if (version < 2) {
@@ -23,7 +24,7 @@ export function install (_Vue) {
     return
   }
 
-  extend(Vue)
+  extend(Vue, this)
   Vue.mixin(mixin)
   Vue.directive('t', { bind, update, unbind })
   Vue.component(component.name, component)
