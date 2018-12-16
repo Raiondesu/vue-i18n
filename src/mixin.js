@@ -12,19 +12,13 @@ export default {
       if (options.i18n instanceof VueI18n) {
         // init locale messages via custom blocks
         if (options.__i18n) {
-          try {
-            let localeMessages = {}
-            options.__i18n.forEach(resource => {
-              localeMessages = merge(localeMessages, JSON.parse(resource))
-            })
-            Object.keys(localeMessages).forEach((locale: Locale) => {
-              options.i18n.mergeLocaleMessage(locale, localeMessages[locale])
-            })
-          } catch (e) {
-            if (process.env.NODE_ENV !== 'production') {
-              warn(`Cannot parse locale messages via custom blocks.`, e)
-            }
-          }
+          let localeMessages = {}
+          options.__i18n.forEach(resource => {
+            localeMessages = merge(localeMessages, JSON.parse(resource))
+          })
+          Object.keys(localeMessages).forEach((locale: Locale) => {
+            options.i18n.mergeLocaleMessage(locale, localeMessages[locale])
+          })
         }
         this._i18n = options.i18n
         this._i18nWatcher = this._i18n.watchI18nData()
