@@ -40,9 +40,12 @@ export function parseArgs (...args: Array<mixed>): Object {
   } else if (args.length === 2) {
     if (typeof args[0] === 'string') {
       locale = args[0]
+    } else {
+      warn('locale should be of type "string"!')
     }
-    /* istanbul ignore if */
-    if (isObject(args[1]) || Array.isArray(args[1])) {
+
+    // Array is always an object
+    if (isObject(args[1])) {
       params = args[1]
     }
   }
