@@ -131,7 +131,7 @@ describe('compile', () => {
   })
 
   describe('unmatch values mode', () => {
-    it('should be warned', () => {
+    it('should warn', () => {
       const spy = sinon.spy(console, 'warn')
 
       const tokens = parse('name: {name}, age: {age}') // named tokens

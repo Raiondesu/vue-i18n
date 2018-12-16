@@ -99,7 +99,7 @@ describe('custom directive', () => {
     })
 
     describe('not support warning', () => {
-      it('should be warned', done => {
+      it('should warn', done => {
         const spy = sinon.spy(console, 'warn')
         createVM({
           i18n,
@@ -119,7 +119,7 @@ describe('custom directive', () => {
     })
 
     describe('path required warning', () => {
-      it('should be warned', done => {
+      it('should warn', done => {
         const spy = sinon.spy(console, 'warn')
         createVM({
           i18n,
@@ -141,7 +141,7 @@ describe('custom directive', () => {
     })
 
     describe('VueI18n instance warning', () => {
-      it('should be warned', done => {
+      it('should warn', done => {
         const spy = sinon.spy(console, 'warn')
         createVM({
           render (h) {

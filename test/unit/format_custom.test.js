@@ -98,7 +98,7 @@ describe('custom formatter', () => {
   })
 
   describe('i18n format getter/settter', () => {
-    it('should be worked', done => {
+    it('should work', done => {
       const i18n = new VueI18n({
         locale: 'en',
         messages

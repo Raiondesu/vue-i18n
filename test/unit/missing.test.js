@@ -33,7 +33,7 @@ describe('missing', () => {
   })
 
   describe('i18n missing getter/setter', () => {
-    it('should be worked', done => {
+    it('should work', done => {
       const missing = (locale, key) => {
         assert(false)
       }

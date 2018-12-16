@@ -170,7 +170,7 @@ describe('component interpolation', () => {
     })
 
     describe('places set, place not set on all children', () => {
-      it('should be warned', done => {
+      it('should warn', done => {
         const spy = sinon.spy(console, 'warn')
         const el = document.createElement('div')
         const vm = new Vue({
@@ -291,7 +291,7 @@ describe('component interpolation', () => {
   })
 
   describe('warnning in render', () => {
-    it('should be warned', () => {
+    it('should warn', () => {
       const spy = sinon.spy(console, 'warn')
 
       Component.render(() => {}, { children: [], parent: {} })

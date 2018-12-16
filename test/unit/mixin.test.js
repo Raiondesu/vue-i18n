@@ -3,7 +3,7 @@ import mixin from '../../src/mixin'
 describe('mixin', () => {
   describe('beforeCreate', () => {
     describe('invalid i18n option', () => {
-      it('should be warned', () => {
+      it('should warn', () => {
         const spy = sinon.spy(console, 'warn')
         // called from Vue core
         new Vue({ i18n: 1 })
@@ -18,7 +18,7 @@ describe('mixin', () => {
 
   describe('beforeDestroy', () => {
     describe('not assign VueI18n instance', () => {
-      it('should be succeeded', () => {
+      it('should succeed', () => {
         assert(mixin.beforeDestroy() === undefined)
       })
     })

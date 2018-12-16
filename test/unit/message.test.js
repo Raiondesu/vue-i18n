@@ -37,7 +37,7 @@ describe('message', () => {
   })
 
   describe('getLocaleMessage / setLocaleMessage', () => {
-    it('should be worked', done => {
+    it('should work', done => {
       const vm = new Vue({
         i18n,
         render (h) {

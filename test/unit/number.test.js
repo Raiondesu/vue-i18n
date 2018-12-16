@@ -11,7 +11,7 @@ function convertToCharCodes (str) {
 const desc = VueI18n.availabilities.numberFormat ? describe : describe.skip
 desc('number format', () => {
   describe('numberFormats', () => {
-    it('should be worked', done => {
+    it('should work', done => {
       const i18n = new VueI18n({
         locale: 'en-US',
         numberFormats
@@ -23,7 +23,7 @@ desc('number format', () => {
   })
 
   describe('getNumberFormat / setNumberFormat', () => {
-    it('should be worked', done => {
+    it('should work', done => {
       const i18n = new VueI18n({
         locale: 'en-US',
         numberFormats
