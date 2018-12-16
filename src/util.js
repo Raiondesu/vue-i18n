@@ -15,7 +15,7 @@ export function warn (msg: string, err: ?Error): void {
 }
 
 export function isObject (obj: mixed): boolean %checks {
-  return obj !== null && typeof obj === 'object'
+  return !isNull(obj) && typeof obj === 'object'
 }
 
 const toString: Function = Object.prototype.toString
