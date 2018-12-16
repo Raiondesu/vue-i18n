@@ -1,6 +1,6 @@
 /* @flow */
 
-import VueI18n from './index'
+import { VueI18n } from './core'
 import { isPlainObject, warn, merge } from './util'
 
 export default {
