@@ -497,13 +497,13 @@ describe('issues', () => {
         locale: 'en',
         messages: {
           'en': {
-            test: 'no tests | 1 test | {n} tests'
+            test: '1 test | {n} tests'
           }
         }
       })
 
       assert.strictEqual(i18n.tc('test', 1), '1 test')
-      assert.strictEqual(i18n.tc('test', 0), 'no tests')
+      assert.strictEqual(i18n.tc('test', 0), '0 tests')
       assert.strictEqual(i18n.tc('test', 10), '10 tests')
     })
 
