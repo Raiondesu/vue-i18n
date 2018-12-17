@@ -4,12 +4,12 @@
  * utilities
  */
 
-export function warn (msg: string, err: ?Error): void {
+export function warn (msg: string, errOrSuppress: ?Error | boolean): void {
   /* istanbul ignore else */
-  if (typeof console !== 'undefined' && process.env.NODE_ENV !== 'production') {
+  if (typeof console !== 'undefined' && process.env.NODE_ENV !== 'production' && errOrSuppress !== true) {
     console.warn('[vue-i18n] ' + msg)
-    if (err) {
-      console.warn(err.stack)
+    if (errOrSuppress && errOrSuppress instanceof Error) {
+      console.warn(errOrSuppress.stack)
     }
   }
 }

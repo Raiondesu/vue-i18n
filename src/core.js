@@ -187,12 +187,11 @@ class VueI18n {
         return missingRet
       }
     } else {
-      if (!this._silentTranslationWarn) {
-        warn(
-          `Cannot translate the value of keypath '${key}'. ` +
-          'Use the value of keypath as default.'
-        )
-      }
+      warn(
+        `Cannot translate the value of keypath '${key}'.` +
+        'Use the value of keypath as default.',
+        this._silentTranslationWarn
+      )
     }
     return key
   }
@@ -221,9 +220,7 @@ class VueI18n {
       if (isPlainObject(message)) {
         ret = message[key]
         if (typeof ret !== 'string') {
-          if (!this._silentTranslationWarn) {
-            warn(`Value of key '${key}' is not a string!`)
-          }
+          warn(`Value of key '${key}' is not a string!`, this._silentTranslationWarn)
           return null
         }
       } else {
@@ -234,9 +231,7 @@ class VueI18n {
       if (typeof pathRet === 'string') {
         ret = pathRet
       } else {
-        if (!this._silentTranslationWarn) {
-          warn(`Value of key '${key}' is not a string!`)
-        }
+        warn(`Value of key '${key}' is not a string!`, this._silentTranslationWarn)
         return null
       }
     }
@@ -292,9 +287,7 @@ class VueI18n {
       )
 
       if (this._isFallbackRoot(translated)) {
-        if (!this._silentTranslationWarn) {
-          warn(`Fall back to translate the link placeholder '${linkPlaceholder}' with root locale.`)
-        }
+        warn(`Fall back to translate the link placeholder '${linkPlaceholder}' with root locale.`, this._silentTranslationWarn)
         /* istanbul ignore if */
         if (!this._root) { throw Error('unexpected error') }
         const root: any = this._root.$i18n
@@ -342,9 +335,7 @@ class VueI18n {
 
     res = this._interpolate(fallback, messages[fallback], key, host, interpolateMode, args, [key])
     if (!isNull(res)) {
-      if (!this._silentTranslationWarn) {
-        warn(`Fall back to translate the keypath '${key}' with '${fallback}' locale.`)
-      }
+      warn(`Fall back to translate the keypath '${key}' with '${fallback}' locale.`, this._silentTranslationWarn)
       return res
     } else {
       return null
@@ -362,9 +353,7 @@ class VueI18n {
       host, 'string', parsedArgs.params
     )
     if (this._isFallbackRoot(ret)) {
-      if (!this._silentTranslationWarn) {
-        warn(`Fall back to translate the keypath '${key}' with root locale.`)
-      }
+      warn(`Fall back to translate the keypath '${key}' with root locale.`, this._silentTranslationWarn)
       /* istanbul ignore if */
       if (!this._root) { throw Error('unexpected error') }
       return this._root.$t(key, ...values)
@@ -381,9 +370,8 @@ class VueI18n {
     const ret: any =
       this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values)
     if (this._isFallbackRoot(ret)) {
-      if (!this._silentTranslationWarn) {
-        warn(`Fall back to interpolate the keypath '${key}' with root locale.`)
-      }
+      warn(`Fall back to interpolate the keypath '${key}' with root locale.`, this._silentTranslationWarn)
+      /* istanbul ignore if */
       if (!this._root) { throw Error('unexpected error') }
       return this._root.$i18n.i(key, locale, values)
     } else {
